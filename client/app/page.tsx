@@ -32,6 +32,12 @@ export default function Home() {
     setMessage("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen items-center">
@@ -39,6 +45,7 @@ export default function Home() {
         <div className="pt-5 space-x-2">
           <input
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             type="text"
             placeholder="chat..."
             className="border p-2"
