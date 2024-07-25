@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io(
+  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
+);
 
 interface Message {
   message: string;
@@ -14,15 +16,21 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [list, setList] = useState<Message[]>([]);
 
+  useEffect(() => {
+    // socket.onイベントリスナーを設定
+    socket.on("receive_message", (data) => {
+      setList((prevList) => [...prevList, data]);
+    });
+
+    return () => {
+      socket.off("receive_message");
+    };
+  }, []);
+
   const handleSendMessage = () => {
     socket.emit("send_message", { message: message });
     setMessage("");
   };
-
-  socket.on("receive_message", (data) => {
-    console.log(data);
-    setList([...list, data]);
-  });
 
   return (
     <div className="container mx-auto">
