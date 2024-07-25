@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import BarChart from "../components/mychart";
 
-// const socket = io(
-//   process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
-// );
-const socket = io("http://localhost:5000");
+const socket = io(
+  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
+);
 
 interface SurveyResult {
   male: number;
@@ -57,6 +57,9 @@ export default function Survey() {
           </div>
           <div className="bg-gray-200 p-2 rounded-lg w-2/3">
             女性: {result.female}
+          </div>
+          <div className="w-full mt-10">
+            <BarChart data={result} />
           </div>
         </div>
       </div>
