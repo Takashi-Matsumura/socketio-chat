@@ -18,6 +18,19 @@ let surveyResults = {
   ans5: 0,
 };
 
+// リセットエンドポイント
+app.post('/reset-survey', (req, res) => {
+  surveyResults = {
+    ans1: 0,
+    ans2: 0,
+    ans3: 0,
+    ans4: 0,
+    ans5: 0,
+  };
+  io.emit('survey_result', surveyResults); // クライアントにリセットされた結果を送信
+  res.send({ message: 'Survey results have been reset.' });
+});
+
 io.on('connection', (socket) => {
   console.log('New client connected');
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import BarChart from "../components/mychart";
+import QRCodeDisplay from "../components/QRCodeDisplay";
 
 const socket = io(
   process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
@@ -41,10 +42,31 @@ export default function Survey() {
     socket.emit("submit_vote", { answer });
   };
 
+  const resetSurvey = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/reset-survey`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Error resetting survey:", error);
+    }
+  };
+
+  const currentUrl = window.location.href;
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen items-center">
-        <h1 className="text-2xl my-10">アンケート: あなたの性別は？</h1>
+        <QRCodeDisplay url={currentUrl} />
+        <button onClick={resetSurvey}>Reset Survey</button>
+        <h1 className="text-2xl my-10">
+          アンケート: どちらかの回答を選んでください
+        </h1>
         <div className="pt-5 space-x-2">
           <button
             onClick={() => handleVote("ans1")}
