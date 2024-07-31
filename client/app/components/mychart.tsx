@@ -19,8 +19,11 @@ ChartJS.register(
 );
 
 interface SurveyResult {
-  male: number;
-  female: number;
+  ans1: number;
+  ans2: number;
+  ans3: number;
+  ans4: number;
+  ans5: number;
 }
 
 interface BarChartProps {
@@ -29,12 +32,12 @@ interface BarChartProps {
 
 const BarChart: React.FC<BarChartProps> = ({ data }) => {
   const chartData = {
-    labels: ["男性", "女性"],
+    labels: ["回答A", "回答B", "回答C"],
     datasets: [
       {
         label: "人数",
-        data: [data.male, data.female],
-        backgroundColor: ["#36A2EB", "#FF6384"],
+        data: [data.ans1, data.ans2, data.ans3],
+        backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
       },
     ],
   };

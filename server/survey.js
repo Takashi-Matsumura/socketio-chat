@@ -11,8 +11,11 @@ const io = new Server(server, {
 });
 
 let surveyResults = {
-  male: 0,
-  female: 0,
+  ans1: 0,
+  ans2: 0,
+  ans3: 0,
+  ans4: 0,
+  ans5: 0,
 };
 
 io.on('connection', (socket) => {
@@ -23,10 +26,24 @@ io.on('connection', (socket) => {
 
   // クライアントからの回答を受信
   socket.on('submit_vote', (data) => {
-    if (data.gender === 'male') {
-      surveyResults.male += 1;
-    } else if (data.gender === 'female') {
-      surveyResults.female += 1;
+    switch (data.answer) {
+      case 'ans1':
+        surveyResults.ans1 += 1;
+        break;
+      case 'ans2':
+        surveyResults.ans2 += 1;
+        break;
+      case 'ans3':
+        surveyResults.ans3 += 1;
+        break;
+      case 'ans4':
+        surveyResults.ans4 += 1;
+        break;
+      case 'ans5':
+        surveyResults.ans5 += 1;
+        break;
+      default:
+        break;
     }
 
     // 更新された集計結果を全クライアントに送信
