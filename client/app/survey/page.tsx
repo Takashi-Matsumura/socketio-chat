@@ -4,17 +4,15 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import BarChart from "../components/mychart";
 import QRCodeDisplay from "../components/QRCodeDisplay";
+import { SurveyResult } from "../components/types";
 
 const socket = io(
   process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
 );
 
-interface SurveyResult {
-  ans1: number;
-  ans2: number;
-  ans3: number;
-  ans4: number;
-  ans5: number;
+interface Survey {
+  question: string;
+  options: string[];
 }
 
 export default function Survey() {
@@ -26,7 +24,17 @@ export default function Survey() {
     ans5: 0,
   });
 
+  const [currentSurvey, setCurrentSurvey] = useState<Survey>({
+    question: "",
+    options: [],
+  });
+
   useEffect(() => {
+    // サーバからアンケートの更新を受信
+    socket.on("survey-update", (survey: Survey) => {
+      setCurrentSurvey(survey);
+    });
+
     // サーバから集計結果を受信
     socket.on("survey_result", (data: SurveyResult) => {
       setResult(data);
@@ -61,45 +69,38 @@ export default function Survey() {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col h-screen items-center">
-        <QRCodeDisplay url={currentUrl} />
-        <button onClick={resetSurvey}>Reset Survey</button>
-        <h1 className="text-2xl my-10">
-          アンケート: どちらかの回答を選んでください
-        </h1>
+      <div className="flex flex-col h-screen items-center mt-10">
+        \<h1 className="text-3xl font-bold my-10">{currentSurvey.question}</h1>
         <div className="pt-5 space-x-2">
-          <button
-            onClick={() => handleVote("ans1")}
-            className="bg-blue-500 text-white rounded-full px-4 py-2"
-          >
-            回答A
-          </button>
-          <button
-            onClick={() => handleVote("ans2")}
-            className="bg-pink-500 text-white rounded-full px-4 py-2"
-          >
-            回答B
-          </button>
-          <button
-            onClick={() => handleVote("ans3")}
-            className="bg-yellow-500 text-white rounded-full px-4 py-2"
-          >
-            回答C
-          </button>
+          {currentSurvey.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() =>
+                handleVote(
+                  `ans${index + 1}` as
+                    | "ans1"
+                    | "ans2"
+                    | "ans3"
+                    | "ans4"
+                    | "ans5"
+                )
+              }
+              className="rounded-full px-4 py-2 border"
+            >
+              {option}
+            </button>
+          ))}
         </div>
         <div className="flex flex-col space-y-1 items-center w-full mt-10">
-          <h2 className="text-xl">集計結果</h2>
-          <div className="bg-gray-200 p-2 rounded-lg w-2/3">
-            回答A: {result.ans1}
-          </div>
-          <div className="bg-gray-200 p-2 rounded-lg w-2/3">
-            回答B: {result.ans2}
-          </div>
-          <div className="bg-gray-200 p-2 rounded-lg w-2/3">
-            回答C: {result.ans3}
+          <div className="mt-10 w-2/3">
+            {currentSurvey.options.map((option, index) => (
+              <div key={index} className="bg-gray-200 p-2 rounded-lg my-2">
+                {option}: {result[`ans${index + 1}` as keyof SurveyResult]}
+              </div>
+            ))}
           </div>
           <div className="w-full mt-10">
-            <BarChart data={result} />
+            <BarChart data={result} options={currentSurvey.options} />
           </div>
         </div>
       </div>

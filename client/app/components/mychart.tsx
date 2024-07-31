@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { SurveyResult } from "../components/types";
 
 ChartJS.register(
   CategoryScale,
@@ -18,31 +19,32 @@ ChartJS.register(
   Legend
 );
 
-interface SurveyResult {
-  ans1: number;
-  ans2: number;
-  ans3: number;
-  ans4: number;
-  ans5: number;
-}
-
 interface BarChartProps {
   data: SurveyResult;
+  options: string[];
 }
 
-const BarChart: React.FC<BarChartProps> = ({ data }) => {
+const BarChart: React.FC<BarChartProps> = ({ data, options }) => {
+  const labels = options;
+
   const chartData = {
-    labels: ["回答A", "回答B", "回答C"],
+    labels: labels,
     datasets: [
       {
         label: "人数",
-        data: [data.ans1, data.ans2, data.ans3],
-        backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
+        data: [data.ans1, data.ans2, data.ans3, data.ans4, data.ans5],
+        backgroundColor: [
+          "#36A2EB",
+          "#FF6384",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
       },
     ],
   };
 
-  const options = {
+  const chartOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -55,7 +57,7 @@ const BarChart: React.FC<BarChartProps> = ({ data }) => {
     },
   };
 
-  return <Bar data={chartData} options={options} />;
+  return <Bar data={chartData} options={chartOptions} />;
 };
 
 export default BarChart;
