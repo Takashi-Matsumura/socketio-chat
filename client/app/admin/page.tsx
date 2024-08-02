@@ -53,7 +53,7 @@ export default function AdminPage() {
     }
   };
 
-  const currentUrl = window.location.href.replace("/admin", "");
+  const currentUrl = ""; //window.location.href.replace("/admin", "");
 
   const [selectedSurvey, setSelectedSurvey] = useState("survey1");
 

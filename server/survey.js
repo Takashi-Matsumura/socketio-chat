@@ -14,6 +14,9 @@ const io = new Server(server, {
     }
 });
 
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const surveys = {
   survey1: {
     question: "What is your favorite color?",
@@ -35,8 +38,27 @@ let surveyResults = {
   ans5: 0,
 };
 
-app.post('/select-survey', (req, res) => {
+app.post('/select-survey', async (req, res) => {
   const { surveyId } = req.body;
+
+  // 現在のアンケート結果をSupabaseに保存
+  try {
+    await prisma.surveyResult.create({
+      data: {
+        surveyId: surveyId,
+        ans1: surveyResults.ans1,
+        ans2: surveyResults.ans2,
+        ans3: surveyResults.ans3,
+        ans4: surveyResults.ans4,
+        ans5: surveyResults.ans5,
+      },
+    });
+    res.status(200).send('Survey results saved successfully.');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error saving survey results.');
+  }
+
   if (surveys[surveyId]) {
     currentSurvey = surveys[surveyId];
     io.emit('survey-update', currentSurvey); // クライアントにアンケートの更新を通知

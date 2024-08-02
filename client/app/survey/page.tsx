@@ -65,7 +65,7 @@ export default function Survey() {
     }
   };
 
-  const currentUrl = window.location.href;
+  const currentUrl = ""; //window.location.href;
 
   return (
     <div className="container mx-auto">
