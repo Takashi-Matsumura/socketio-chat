@@ -11,13 +11,6 @@ const socket = io(
 );
 
 export default function AdminPage() {
-  const [result, setResult] = useState<SurveyResult>({
-    ans1: 0,
-    ans2: 0,
-    ans3: 0,
-    ans4: 0,
-    ans5: 0,
-  });
   const [currentSurvey, setCurrentSurvey] = useState({
     question: "",
     options: [],
@@ -26,11 +19,6 @@ export default function AdminPage() {
   useEffect(() => {
     socket.on("survey-update", (survey) => {
       setCurrentSurvey(survey);
-    });
-
-    // サーバから集計結果を受信
-    socket.on("survey_result", (data: SurveyResult) => {
-      setResult(data);
     });
 
     return () => {
@@ -54,8 +42,6 @@ export default function AdminPage() {
   };
 
   const currentUrl = ""; //window.location.href.replace("/admin", "");
-
-  //const [selectedSurvey, setSelectedSurvey] = useState("survey1");
 
   const handleSurveyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(event.target.value);
