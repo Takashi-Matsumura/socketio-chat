@@ -15,6 +15,12 @@ npm install
 npm run dev
 ```
 
+.env を作成して次の環境変数を設定してください。
+
+```
+NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+```
+
 ### ServerSide: Express
 
 ```bash
