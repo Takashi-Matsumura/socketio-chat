@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { SurveyResult } from "../components/types";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -20,19 +21,17 @@ ChartJS.register(
 );
 
 interface BarChartProps {
-  data: SurveyResult;
+  results: number[];
   options: string[];
 }
 
-const BarChart: React.FC<BarChartProps> = ({ data, options }) => {
-  const labels = options;
-
-  const chartData = {
-    labels: labels,
+const BarChart: React.FC<BarChartProps> = ({ results, options }) => {
+  const [chartData, setChartData] = useState({
+    labels: options,
     datasets: [
       {
         label: "人数",
-        data: [data.ans1, data.ans2, data.ans3, data.ans4, data.ans5],
+        data: results,
         backgroundColor: [
           "#36A2EB",
           "#FF6384",
@@ -42,7 +41,27 @@ const BarChart: React.FC<BarChartProps> = ({ data, options }) => {
         ],
       },
     ],
-  };
+  });
+
+  useEffect(() => {
+    console.log("rerendering... results", results);
+    setChartData({
+      labels: options,
+      datasets: [
+        {
+          label: "人数",
+          data: results,
+          backgroundColor: [
+            "#36A2EB",
+            "#FF6384",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+        },
+      ],
+    });
+  }, [results, options]);
 
   const chartOptions = {
     responsive: true,

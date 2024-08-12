@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 
 import io from "socket.io-client";
-import SurveyComponent from "./components/surveys/SurveyComponent";
-import { SurveyData, SurveyResult } from "./components/types";
 
 const socket = io(
   process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
@@ -17,12 +15,11 @@ interface Message {
 export default function Home() {
   const [message, setMessage] = useState("");
   const [list, setList] = useState<Message[]>([]);
-  const [survey, setSurvey] = useState<SurveyData | null>(null);
 
   useEffect(() => {
-    socket.on("survey_changed", (data) => {
-      console.log(data);
-      setSurvey(data);
+    // socket.onイベントリスナーを設定
+    socket.on("receive_message", (data) => {
+      setList((prevList) => [...prevList, data]);
     });
 
     return () => {
@@ -44,11 +41,7 @@ export default function Home() {
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen items-center">
-        <h1 className="text-3xl font-bold my-10">Survey App</h1>
-        {survey?.id != null && (
-          <SurveyComponent data={survey} socket={socket} />
-        )}
-        {/* <h1 className="text-2xl my-10">ChatApp using socket.io</h1>
+        <h1 className="text-2xl my-10">ChatApp using socket.io</h1>
         <div className="pt-5 space-x-2">
           <input
             onChange={(e) => setMessage(e.target.value)}
@@ -71,7 +64,7 @@ export default function Home() {
               {chat.message}
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
     </div>
   );

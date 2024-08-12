@@ -55,7 +55,7 @@ export default function AdminPage() {
 
   const currentUrl = ""; //window.location.href.replace("/admin", "");
 
-  const [selectedSurvey, setSelectedSurvey] = useState("survey1");
+  //const [selectedSurvey, setSelectedSurvey] = useState("survey1");
 
   const handleSurveyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(event.target.value);
@@ -85,11 +85,49 @@ export default function AdminPage() {
     }
   };
 
+  const [selectedSurvey, setSelectedSurvey] = useState("survey1");
+  const handleToggle = (survey: string) => {
+    setSelectedSurvey(survey);
+    socket.emit("select_survey", survey);
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen items-center justify-center">
         <h1 className="text-5xl font-bold mb-10">Admin Survey Control</h1>
-        <div className="flex space-x-10 items-center mb-10">
+        <div className="flex space-x-4">
+          <button
+            className={`px-4 py-2 ${
+              selectedSurvey === "survey0"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+            onClick={() => handleToggle("survey0")}
+          >
+            Survey 0
+          </button>
+          <button
+            className={`px-4 py-2 ${
+              selectedSurvey === "survey1"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+            onClick={() => handleToggle("survey1")}
+          >
+            Survey 1
+          </button>
+          <button
+            className={`px-4 py-2 ${
+              selectedSurvey === "survey2"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+            onClick={() => handleToggle("survey2")}
+          >
+            Survey 2
+          </button>
+        </div>
+        {/* <div className="flex space-x-10 items-center mb-10">
           <div className="flex flex-col items-center">
             <QRCode value={currentUrl} />
             <h3>{currentUrl}</h3>
@@ -120,7 +158,7 @@ export default function AdminPage() {
             </ul>
           </div>
         </div>
-        <BarChart data={result} options={currentSurvey.options} />
+        <BarChart data={result} options={currentSurvey.options} /> */}
       </div>
     </div>
   );
