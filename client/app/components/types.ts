@@ -12,5 +12,5 @@ export interface SurveyData {
 
 export interface Message {
   message: string;
-  id: string;
+  id: number;
 }

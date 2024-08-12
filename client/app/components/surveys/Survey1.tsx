@@ -30,7 +30,7 @@ const Survey1: React.FC<Props> = ({ data, socket, visible }) => {
   }, []);
 
   const handleSendMessage = () => {
-    socket.emit("send_message", { message: message });
+    socket.emit("send_message", { id: Date.now(), message: message });
     setMessage("");
   };
 
