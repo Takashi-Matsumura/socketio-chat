@@ -73,11 +73,11 @@ const Survey1: React.FC<Props> = ({ data, socket, visible }) => {
         </>
       )}
       <div className="flex flex-col space-y-1 items-center w-full mt-10">
-        {/* {list.map((chat) => (
+        {list.map((chat) => (
           <p key={chat.id} className="bg-gray-200 p-2 rounded-lg w-2/3">
             {chat.message}
           </p>
-        ))} */}
+        ))}
       </div>
 
       <div className="w-full mt-20"></div>
