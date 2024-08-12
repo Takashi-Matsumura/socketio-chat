@@ -46,10 +46,12 @@ const Survey1: React.FC<Props> = ({ data, socket }) => {
   return (
     <div className="flex flex-col justify-center w-full">
       <div className="flex w-ful space-x-5">
-        <p className="text-2xl w-1/3 ">アンケート:</p>
+        <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
         <div className="flex flex-col w-full">
-          <p className="text-3xl font-bold mb-5">{survey.question}</p>
-          <p className="text-2xl mb-10">{survey.description}</p>
+          <p className="sm:text-3xl text-lg font-bold mb-5">
+            {survey.question}
+          </p>
+          <p className="sm:text-2xl text-lg mb-10">{survey.description}</p>
         </div>
       </div>
 
@@ -59,12 +61,12 @@ const Survey1: React.FC<Props> = ({ data, socket }) => {
           onKeyDown={handleKeyDown}
           type="text"
           placeholder="IT企業名..."
-          className="border px-2 py-5 w-full text-3xl"
+          className="border px-2 py-5 w-full sm:text-3xl text-lg"
           value={message}
         />
         <button
           onClick={() => handleSendMessage()}
-          className="bg-blue-500 text-white rounded-full px-4 py-2 w-52 text-3xl"
+          className="bg-blue-500 text-white rounded-full px-4 py-2 sm:w-52 w-28 sm:text-3xl text-lg"
         >
           回答
         </button>

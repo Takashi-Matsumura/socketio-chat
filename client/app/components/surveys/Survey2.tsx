@@ -73,6 +73,15 @@ const Survey2: React.FC<Props> = ({ data, socket }) => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
     plugins: {
       legend: {
         position: "top" as const,
@@ -87,10 +96,14 @@ const Survey2: React.FC<Props> = ({ data, socket }) => {
   return (
     <div className="flex flex-col justify-center w-full">
       <div className="flex w-ful space-x-5">
-        <p className="text-2xl w-1/3 ">アンケート:</p>
+        <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
         <div className="flex flex-col w-full">
-          <p className="text-3xl font-bold mb-5">{survey.question}</p>
-          {!answered && <p className="text-2xl mb-10">{survey.description}</p>}
+          <p className="sm:text-3xl text-lg font-bold mb-5">
+            {survey.question}
+          </p>
+          {!answered && (
+            <p className="sm:text-2xl text-lg mb-10">{survey.description}</p>
+          )}
         </div>
       </div>
       <div className="flex w-full justify-between">
@@ -99,13 +112,13 @@ const Survey2: React.FC<Props> = ({ data, socket }) => {
             <button
               onClick={() => handleClick(index)}
               key={index}
-              className="bg-blue-500 text-white px-2 py-5 m-2 text-3xl w-1/6"
+              className="bg-blue-500 text-white px-2 py-5 m-2 sm:text-3xl text-lg w-1/6"
             >
               {option}
             </button>
           ))
         ) : (
-          <p className="text-3xl font-bold text-red-500 items-center w-full text-center">
+          <p className="sm:text-3xl text-lg font-bold text-red-500 items-center w-full text-center">
             ご回答ありがとうございました
           </p>
         )}

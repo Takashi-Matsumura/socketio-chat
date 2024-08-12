@@ -14,7 +14,7 @@ const PORT = 5000;
 const surveys = {
     survey0: {
         id: 0,
-        question: "出席を確認します。",
+        question: "出席を確認します!",
         description: "[出席]ボタンをタップしてください。",
         options: ["出席"]
     },
