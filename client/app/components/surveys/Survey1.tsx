@@ -6,13 +6,14 @@ import { SurveyData, SurveyResult } from "../types";
 interface Props {
   data: SurveyData;
   socket: any;
+  visible: boolean;
 }
 
 interface Message {
   message: string;
 }
 
-const Survey1: React.FC<Props> = ({ data, socket }) => {
+const Survey1: React.FC<Props> = ({ data, socket, visible }) => {
   const [survey, setSurvey] = useState<SurveyData>(data);
   const [message, setMessage] = useState("");
   const [list, setList] = useState<Message[]>([]);
@@ -45,32 +46,36 @@ const Survey1: React.FC<Props> = ({ data, socket }) => {
 
   return (
     <div className="flex flex-col justify-center w-full">
-      <div className="flex w-ful space-x-5">
-        <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
-        <div className="flex flex-col w-full">
-          <p className="sm:text-3xl text-lg font-bold mb-5">
-            {survey.question}
-          </p>
-          <p className="sm:text-2xl text-lg mb-10">{survey.description}</p>
-        </div>
-      </div>
+      {visible && (
+        <>
+          <div className="flex w-ful space-x-5">
+            <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
+            <div className="flex flex-col w-full">
+              <p className="sm:text-3xl text-lg font-bold mb-5">
+                {survey.question}
+              </p>
+              <p className="sm:text-2xl text-lg mb-10">{survey.description}</p>
+            </div>
+          </div>
 
-      <div className="flex pt-5 w-full space-x-5 justify-between">
-        <input
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          type="text"
-          placeholder="IT企業名..."
-          className="border px-2 py-5 w-full sm:text-3xl text-lg"
-          value={message}
-        />
-        <button
-          onClick={() => handleSendMessage()}
-          className="bg-blue-500 text-white rounded-full px-4 py-2 sm:w-52 w-28 sm:text-3xl text-lg"
-        >
-          回答
-        </button>
-      </div>
+          <div className="flex pt-5 w-full space-x-5 justify-between">
+            <input
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              type="text"
+              placeholder="IT企業名..."
+              className="border px-2 py-5 w-full sm:text-3xl text-lg"
+              value={message}
+            />
+            <button
+              onClick={() => handleSendMessage()}
+              className="bg-blue-500 text-white rounded-full px-4 py-2 sm:w-52 w-28 sm:text-3xl text-lg"
+            >
+              回答
+            </button>
+          </div>
+        </>
+      )}
       <div className="flex flex-col space-y-1 items-center w-full mt-10">
         {list.map((chat) => (
           <div className="bg-gray-200 p-2 rounded-lg w-2/3">{chat.message}</div>

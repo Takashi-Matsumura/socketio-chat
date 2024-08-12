@@ -20,9 +20,10 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 interface Props {
   data: SurveyData;
   socket: any;
+  visible: boolean;
 }
 
-const Survey0: React.FC<Props> = ({ data, socket }) => {
+const Survey0: React.FC<Props> = ({ data, socket, visible }) => {
   const [survey, setSurvey] = useState<SurveyData>(data);
   const [answered, setAnswered] = useState(false);
   const [results, setResults] = useState<number[]>([0, 0, 0, 0, 0]);
@@ -95,37 +96,42 @@ const Survey0: React.FC<Props> = ({ data, socket }) => {
 
   return (
     <div className="flex flex-col justify-center w-full">
-      <div className="flex w-ful space-x-5">
-        <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
-        <div className="flex flex-col w-full">
-          <p className="sm:text-3xl text-lg font-bold mb-5">
-            {survey.question}
-          </p>
-          {!answered && (
-            <p className="sm:text-2xl text-lg mb-10">{survey.description}</p>
-          )}
-        </div>
-      </div>
-      <div className="flex w-full justify-center">
-        {!answered ? (
-          survey.options.map((option, index) => (
-            <button
-              onClick={() => handleClick(index)}
-              key={index}
-              className="bg-blue-500 text-white px-2 py-5 m-2 sm:text-3xl text-lg w-1/6"
-            >
-              {option}
-            </button>
-          ))
-        ) : (
-          <p className="sm:text-3xl text-lg font-bold text-red-500 text-center">
-            ご回答ありがとうございました
-          </p>
-        )}
-      </div>
+      {visible && (
+        <>
+          <div className="flex w-ful space-x-5">
+            <p className="sm:text-2xl text-lg w-1/3 ">アンケート:</p>
+            <div className="flex flex-col w-full">
+              <p className="sm:text-3xl text-lg font-bold mb-5">
+                {survey.question}
+              </p>
+              {!answered && (
+                <p className="sm:text-2xl text-lg mb-10">
+                  {survey.description}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex w-full justify-center">
+            {!answered ? (
+              survey.options.map((option, index) => (
+                <button
+                  onClick={() => handleClick(index)}
+                  key={index}
+                  className="bg-blue-500 text-white px-2 py-5 m-2 sm:text-3xl text-lg w-1/6"
+                >
+                  {option}
+                </button>
+              ))
+            ) : (
+              <p className="sm:text-3xl text-lg font-bold text-red-500 text-center">
+                ご回答ありがとうございました
+              </p>
+            )}
+          </div>
+        </>
+      )}
       <div className="w-full mt-20">
         <Bar data={chartData} options={chartOptions} className="w-full" />
-        {/* <BarChart results={results} options={survey.options} /> */}
       </div>
     </div>
   );

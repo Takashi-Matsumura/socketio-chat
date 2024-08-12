@@ -4,9 +4,14 @@ import { SurveyData } from "../types";
 interface SurveyComponentProps {
   data: SurveyData;
   socket: any;
+  surveyVisible: boolean;
 }
 
-const SurveyComponent: React.FC<SurveyComponentProps> = ({ data, socket }) => {
+const SurveyComponent: React.FC<SurveyComponentProps> = ({
+  data,
+  socket,
+  surveyVisible = true,
+}) => {
   let Survey;
   switch (data.id) {
     case 0:
@@ -23,7 +28,7 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({ data, socket }) => {
       return <div>Unknown Survey</div>;
   }
 
-  return <Survey data={data} socket={socket} />;
+  return <Survey data={data} socket={socket} visible={surveyVisible} />;
 };
 
 export default SurveyComponent;
