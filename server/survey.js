@@ -20,15 +20,15 @@ const surveys = {
     },
     survey1: {
         id: 1,
-        question: "What is your favorite color?",
-        description: "",
-        options: ["Red", "Blue", "Green", "Yellow", "Other"]
+        question: "あなたの知っている有名なIT企業は?",
+        description: "複数回答可（一社ずつ回答）",
+        options: []
     },
     survey2: {
         id: 2,
-        question: "What is your favorite food?",
+        question: "どのエンジニアに興味がありますか?",
         description: "",
-        options: ["Pizza", "Burger", "Sushi", "Pasta", "Other"]
+        options: ["ソフト", "システム", "ネットワーク", "クラウド", "その他"]
     }
 };
 let surveyResults = [0, 0, 0, 0, 0];

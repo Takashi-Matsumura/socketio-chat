@@ -1,11 +1,81 @@
-import React from "react";
+"use client";
 
-const Survey1 = () => {
+import React, { useEffect, useState } from "react";
+import { SurveyData, SurveyResult } from "../types";
+
+interface Props {
+  data: SurveyData;
+  socket: any;
+}
+
+interface Message {
+  message: string;
+}
+
+const Survey1: React.FC<Props> = ({ data, socket }) => {
+  const [survey, setSurvey] = useState<SurveyData>(data);
+  const [message, setMessage] = useState("");
+  const [list, setList] = useState<Message[]>([]);
+
+  useEffect(() => {
+    socket.on("survey_changed", (data: SurveyData) => {
+      console.log(data);
+      setSurvey(data);
+    });
+
+    socket.on("receive_message", (data: any) => {
+      setList((prevList) => [...prevList, data]);
+    });
+
+    return () => {
+      socket.off("receive_message");
+    };
+  }, []);
+
+  const handleSendMessage = () => {
+    socket.emit("send_message", { message: message });
+    setMessage("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      handleSendMessage();
+    }
+  };
+
   return (
-    <div>
-      <div>
-        <h1>Survey1</h1>
+    <div className="flex flex-col justify-center w-full">
+      <div className="flex w-ful space-x-5">
+        <p className="text-2xl w-1/3 ">アンケート:</p>
+        <div className="flex flex-col w-full">
+          <p className="text-3xl font-bold mb-5">{survey.question}</p>
+          <p className="text-2xl mb-10">{survey.description}</p>
+        </div>
       </div>
+
+      <div className="flex pt-5 w-full space-x-5 justify-between">
+        <input
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          type="text"
+          placeholder="IT企業名..."
+          className="border px-2 py-5 w-full text-3xl"
+          value={message}
+        />
+        <button
+          onClick={() => handleSendMessage()}
+          className="bg-blue-500 text-white rounded-full px-4 py-2 w-52 text-3xl"
+        >
+          回答
+        </button>
+      </div>
+      <div className="flex flex-col space-y-1 items-center w-full mt-10">
+        {list.map((chat) => (
+          <div className="bg-gray-200 p-2 rounded-lg w-2/3">{chat.message}</div>
+        ))}
+      </div>
+
+      <div className="w-full mt-20"></div>
     </div>
   );
 };
