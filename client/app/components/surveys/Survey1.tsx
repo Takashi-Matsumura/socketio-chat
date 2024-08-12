@@ -1,16 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { SurveyData, SurveyResult } from "../types";
+import { Message, SurveyData, SurveyResult } from "../types";
 
 interface Props {
   data: SurveyData;
   socket: any;
   visible: boolean;
-}
-
-interface Message {
-  message: string;
 }
 
 const Survey1: React.FC<Props> = ({ data, socket, visible }) => {
@@ -78,7 +74,7 @@ const Survey1: React.FC<Props> = ({ data, socket, visible }) => {
       )}
       <div className="flex flex-col space-y-1 items-center w-full mt-10">
         {list.map((chat) => (
-          <div key={chat.message} className="bg-gray-200 p-2 rounded-lg w-2/3">
+          <div key={chat.id} className="bg-gray-200 p-2 rounded-lg w-2/3">
             {chat.message}
           </div>
         ))}

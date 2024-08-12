@@ -10,6 +10,8 @@ const io = new Server(server, {
     }
 });
 
+const { v4: uuidv4 } = require('uuid');
+
 const PORT = 5000;
 const surveys = {
     survey0: {
@@ -50,6 +52,7 @@ io.on('connection', (socket) => {
 
     socket.on('send_message', (data) => {
         console.log(data);
+        data.id = uuidv4();
         io.emit('receive_message', data);
     });
 

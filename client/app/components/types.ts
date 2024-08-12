@@ -9,3 +9,8 @@ export interface SurveyData {
   description: string;
   options: string[];
 }
+
+export interface Message {
+  message: string;
+  id: string;
+}
