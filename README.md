@@ -29,6 +29,12 @@ npm install
 npm run start
 ```
 
+.env にて CROS も設定できます。
+
+```
+CORS_ORIGIN_URL=http://localhost:3000
+```
+
 ## Deploy
 
 サーバとクライアントをどのようにデプロイするのかを調査しています・・・
