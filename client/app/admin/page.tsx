@@ -73,6 +73,56 @@ export default function AdminPage() {
         >
           Survey 2
         </button>
+        <button
+          className={`px-4 py-2 ${
+            selectedSurvey === "survey3"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => handleToggle("survey3")}
+        >
+          Survey 3
+        </button>
+        <button
+          className={`px-4 py-2 ${
+            selectedSurvey === "survey4"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => handleToggle("survey4")}
+        >
+          Survey 4
+        </button>
+        <button
+          className={`px-4 py-2 ${
+            selectedSurvey === "survey5"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => handleToggle("survey5")}
+        >
+          Survey 5
+        </button>
+        <button
+          className={`px-4 py-2 ${
+            selectedSurvey === "survey6"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => handleToggle("survey6")}
+        >
+          Survey 6
+        </button>
+        <button
+          className={`px-4 py-2 ${
+            selectedSurvey === "survey7"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+          }`}
+          onClick={() => handleToggle("survey7")}
+        >
+          Survey 7
+        </button>
       </div>
       <div className="flex flex-col h-screen w-full items-center p-3">
         {survey?.id != null && (

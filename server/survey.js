@@ -29,7 +29,37 @@ const surveys = {
         question: "どのエンジニアに興味がありますか?",
         description: "",
         options: ["ソフト", "システム", "ネットワーク", "クラウド", "その他"]
-    }
+    },
+    survey3: {
+        id: 3,
+        question: "あなたの「強み」を教えて！",
+        description: "むずかしく考えないで、直感で答えてください",
+        options: []
+    },
+    survey4: {
+        id: 4,
+        question: "社会人に向けてあなたの不安な項目はどれ？",
+        description: "",
+        options: ["学び", "時間", "目標", "責任", "評価"]
+    },
+    survey5: {
+        id: 5,
+        question: "あなたはどのスキルを伸ばしたいですか?",
+        description: "最優先で伸ばしたいスキルを２つ選んでください",
+        options: []
+    },
+    survey6: {
+        id: 6,
+        question: "コミュニケーションに自信はありますか?",
+        description: "",
+        options: ["ある", "ない"]
+    },
+    survey7: {
+        id: 7,
+        question: "あなたの10年後の未来をおしえて",
+        description: "どのような仕事をして、どのような成功をしてみたいか",
+        options: []
+    },
 };
 let surveyResults = [0, 0, 0, 0, 0];
 const resetSurveyResults = () => {

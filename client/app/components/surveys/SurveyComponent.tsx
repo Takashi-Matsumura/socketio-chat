@@ -23,7 +23,21 @@ const SurveyComponent: React.FC<SurveyComponentProps> = ({
     case 2:
       Survey = dynamic(() => import("./Survey2"));
       break;
-    // 他のケースも追加可能
+    case 3:
+      Survey = dynamic(() => import("./Survey3"));
+      break;
+    case 4:
+      Survey = dynamic(() => import("./Survey4"));
+      break;
+    case 5:
+      Survey = dynamic(() => import("./Survey5"));
+      break;
+    case 6:
+      Survey = dynamic(() => import("./Survey6"));
+      break;
+    case 7:
+      Survey = dynamic(() => import("./Survey7"));
+      break;
     default:
       return <div>Unknown Survey</div>;
   }
