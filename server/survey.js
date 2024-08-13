@@ -4,6 +4,8 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
+
+require('dotenv').config();
 const io = new Server(server, {
     cors: {
         origin: process.env.CORS_ORIGIN_URL || "http://localhost:3000"
