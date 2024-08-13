@@ -7,15 +7,12 @@ import QRCode from "qrcode.react";
 import { SurveyData, SurveyResult } from "../components/types";
 import SurveyComponent from "../components/surveys/SurveyComponent";
 
-const socket = io(
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000"
-);
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+const socket = io(serverUrl);
 
 export default function AdminPage() {
   const [survey, setSurvey] = useState<SurveyData | null>(null);
   const [selectedSurvey, setSelectedSurvey] = useState("survey1");
-
-  const currentUrl = ""; //window.location.href.replace("/admin", "");
 
   useEffect(() => {
     socket.on("survey_changed", (data) => {
@@ -33,14 +30,16 @@ export default function AdminPage() {
     socket.emit("select_survey", survey);
   };
 
-  const url = window.location.href.replace("/admin", "");
+  const url = new URL(serverUrl);
+  url.port = "3000";
+  const clientUrl = url.toString();
 
   return (
     <div className="flex flex-col h-screen items-center justify-center">
       <div className="flex items-center my-20">
-        <QRCode value={url} size={64} className="mr-4" />
+        <QRCode value={clientUrl} size={64} className="mr-4" />
         <h1 className="text-5xl font-bold">Admin Survey Control</h1>
-        <QRCode value={url} size={64} className="ml-4" />
+        <QRCode value={clientUrl} size={64} className="ml-4" />
       </div>
       <div className="flex space-x-4">
         <button
